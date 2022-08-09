@@ -1,0 +1,100 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import PokemonView from "./PokemonView.vue";
+import { usePokeStore } from "../store/store";
+
+const store = usePokeStore();
+let inputName = ref("");
+
+const handleClick = async (pokeId) => {
+  await store.fetchPokemon(pokeId);
+};
+
+const handleChange = (e) => {
+  let text = e.target.value.toLowerCase();
+  store.filterPokemonList(text);
+};
+
+onMounted(() => {
+  store.fetchPokemonList();
+});
+</script>
+<template>
+  <div class="container">
+    <div class="pokemon-list">
+      <div class="input-container">
+        <input
+          v-model="inputName"
+          placeholder="Search"
+          class="search-input"
+          v-on:input="handleChange"
+        />
+      </div>
+
+      <div
+        href="#"
+        class="item-list"
+        v-for="pokemon in store.pokemonFilter"
+        :key="pokemon.entry_number"
+        @click.prevent="handleClick(pokemon.entry_number)"
+      >
+        <p>{{ pokemon.entry_number }}-</p>
+        <p>{{ pokemon.pokemon_species.name }}</p>
+      </div>
+    </div>
+    <PokemonView />
+  </div>
+</template>
+
+<style scoped>
+.container {
+  display: flex;
+}
+.pokemon-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  padding-top: 0;
+  width: 300px;
+  overflow-y: scroll;
+  max-height: 100vh;
+  gap: 10px;
+}
+.input-container {
+  background-color: #eaeaea;
+  position: sticky;
+  padding-top: 1rem;
+  top: 0;
+}
+.search-input {
+  width: 100%;
+  margin-bottom: 1rem;
+  transition: 0.4s;
+  background-color: #efefef;
+  border: none;
+  border-radius: 5rem;
+  padding: 0.65rem;
+}
+.search-input:focus-visible {
+  transition: 0.4s;
+  background-color: white;
+  border: none;
+  outline: none;
+}
+.item-list {
+  display: flex;
+  cursor: pointer;
+  transition: 0.4s;
+  background-color: #efefef;
+  padding: 1rem;
+}
+.item-list:hover {
+  transition: 0.4s;
+  background-color: white;
+  border-radius: 15px;
+}
+.item-list p::first-letter {
+  text-transform: uppercase;
+}
+</style>
