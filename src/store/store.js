@@ -9,6 +9,7 @@ export const usePokeStore = defineStore({
       pokemonList: [],
       pokemonFilter: [],
       pokemonCurrent: {},
+      isLoading: false,
     };
   },
   actions: {
@@ -18,9 +19,10 @@ export const usePokeStore = defineStore({
       this.pokemonFilter = [...data.pokemon_entries];
     },
     async fetchPokemon(pokeId) {
+      this.isLoading = true;
       const { data } = await axios.get(`${api_url}/pokemon/${pokeId}`);
       this.pokemonCurrent = { ...data };
-      console.log("current", this.pokemonCurrent);
+      this.isLoading = false;
     },
     filterPokemonList(text) {
       if (text === "") {

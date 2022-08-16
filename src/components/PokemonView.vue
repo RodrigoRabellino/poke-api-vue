@@ -1,27 +1,32 @@
 <script setup>
 import { usePokeStore } from "../store/store";
+import Loader from "./Loader.vue";
 const store = usePokeStore();
-const { pokemonCurrent } = store;
 </script>
 <template>
-  <div class="pokemon__container" v-if="pokemonCurrent.name">
-    <h1>{{ pokemonCurrent.name }}</h1>
-    <div class="sprite__container">
-      <img
-        :src="pokemonCurrent.sprites.back_default"
-        :alt="pokemonCurrent.name"
-      />
-      <img
-        :src="pokemonCurrent.sprites.front_default"
-        :alt="pokemonCurrent.name"
-      />
+  <div class="container" v-if="store.pokemonCurrent.name">
+    <Loader v-if="store.isLoading" />
+    <div v-else class="pokemon__container">
+      <h1>{{ store.pokemonCurrent.name }}</h1>
+      <div class="sprite__container">
+        <img
+          loading="lazy"
+          :src="store.pokemonCurrent.sprites.back_default"
+          :alt="store.pokemonCurrent.name"
+        />
+        <img
+          loading="lazy"
+          :src="store.pokemonCurrent.sprites.front_default"
+          :alt="store.pokemonCurrent.name"
+        />
+      </div>
+      <div class="stat__container"></div>
     </div>
-    <div class="stat__container"></div>
   </div>
 </template>
 
 <style scoped>
-.pokemon__container {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,6 +34,16 @@ const { pokemonCurrent } = store;
   width: 100%;
   height: 100vh;
 }
+.pokemon__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pokemon__container img {
+  width: 200px;
+}
+
 .pokemon__container h1::first-letter {
   text-transform: uppercase;
 }
