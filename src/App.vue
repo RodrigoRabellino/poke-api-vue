@@ -1,8 +1,12 @@
 <script setup>
-import Pokedex from "./components/Pokedex.vue";
+import Home from "./components/Home.vue";
+import MyNavBar from "./components/MyNavBar.vue";
 </script>
 <template>
-  <Pokedex />
+  <div>
+    <MyNavBar />
+    <RouterView />
+  </div>
 </template>
 
 <style>
