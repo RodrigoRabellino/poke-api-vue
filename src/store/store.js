@@ -22,6 +22,7 @@ export const usePokeStore = defineStore({
       this.isLoading = true;
       const { data } = await axios.get(`${api_url}/pokemon/${pokeId}`);
       this.pokemonCurrent = { ...data };
+      console.log(this.pokemonCurrent);
       this.isLoading = false;
     },
     filterPokemonList(text) {
