@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
-const api_url = "https://pokeapi.co/api/v2";
+import { getPokemons, getPokemon } from "@/services/pokeApi";
 
 export const usePokeStore = defineStore({
   id: "pokeStore",
@@ -14,14 +13,14 @@ export const usePokeStore = defineStore({
   },
   actions: {
     async fetchPokemonList() {
-      const { data } = await axios.get(`${api_url}/pokedex/kanto`);
-      this.pokemonList = [...data.pokemon_entries];
-      this.pokemonFilter = [...data.pokemon_entries];
+      const resp = await getPokemons();
+      this.pokemonList = [...resp];
+      this.pokemonFilter = [...resp];
     },
     async fetchPokemon(pokeId) {
       this.isLoading = true;
-      const { data } = await axios.get(`${api_url}/pokemon/${pokeId}`);
-      this.pokemonCurrent = { ...data };
+      const resp = await getPokemon(pokeId);
+      this.pokemonCurrent = { ...resp };
       this.isLoading = false;
     },
     filterPokemonList(text) {

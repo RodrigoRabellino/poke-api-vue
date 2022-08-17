@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import PokemonView from "./PokemonView.vue";
 import pokeball from "@/assets/pokeball.svg";
 import pokeballOpen from "@/assets/pokeball-open.svg";
@@ -17,9 +17,9 @@ const handleChange = (e) => {
   store.filterPokemonList(text);
 };
 
-onMounted(() => {
-  store.fetchPokemonList();
-});
+// onMounted(() => {
+//   store.fetchPokemonList();
+// });
 </script>
 <template>
   <div class="container">
@@ -67,11 +67,10 @@ onMounted(() => {
   padding-top: 0;
   width: 300px;
   overflow-y: scroll;
-  max-height: 100vh;
+  height: calc(100vh - 64px);
   gap: 10px;
 }
 .input-container {
-  background-color: #eaeaea;
   position: sticky;
   padding-top: 1rem;
   top: 0;
@@ -80,14 +79,16 @@ onMounted(() => {
   width: 100%;
   margin-bottom: 1rem;
   transition: 0.4s;
-  background-color: #efefef;
+  background-color: rgb(83, 13, 148);
   border: none;
+  color: white;
   border-radius: 5rem;
   padding: 0.65rem;
 }
 .search-input:focus-visible {
   transition: 0.4s;
   background-color: white;
+  color: black;
   border: none;
   outline: none;
 }
