@@ -18,6 +18,7 @@ export const usePokeStore = defineStore({
       this.pokemonFilter = [...resp];
     },
     async fetchPokemon(pokeId) {
+      this.pokemonCurrent = {};
       this.isLoading = true;
       const resp = await getPokemon(pokeId);
       this.pokemonCurrent = { ...resp };

@@ -58,6 +58,7 @@ const handleChange = (e) => {
 <style scoped>
 .container {
   display: flex;
+  height: calc(100vh - 64px);
 }
 .pokemon-list {
   position: relative;
@@ -85,13 +86,7 @@ const handleChange = (e) => {
   border-radius: 5rem;
   padding: 0.65rem;
 }
-.search-input:focus-visible {
-  transition: 0.4s;
-  background-color: white;
-  color: black;
-  border: none;
-  outline: none;
-}
+
 .item-list {
   align-items: center;
   display: flex;
